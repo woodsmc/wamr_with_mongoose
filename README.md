@@ -161,4 +161,4 @@ When you execute WAMR you have to tell it at the command line what permissions y
 
 This should give you a working webserver available on localhost at port 8090.
 
-![screencapture](.\picture\screencapture.PNG)
+![screencapture](./picture/screencapture.PNG)
