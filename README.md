@@ -1,5 +1,5 @@
 # A Web Server in WebAssembly with Mongoose and WAMR
-Mongoose is an embedded Webserver, MQTT, WebSocket, SMTP server and a whole lot more. You can find out more about Mongoose on the Mongoose GitHub Repository - [cesanta/mongoose: Embedded Web Server (github.com)](https://github.com/cesanta/mongoose)
+Mongoose is an embedded Webserver, MQTT, WebSocket, SNTP server and a whole lot more. You can find out more about Mongoose on the Mongoose GitHub Repository - [cesanta/mongoose: Embedded Web Server (github.com)](https://github.com/cesanta/mongoose)
 
 [WAMR is the Wasm Micro Runtime](https://github.com/bytecodealliance/wasm-micro-runtime), it is a WebAssembly runtime designed to run on IoT and embedded devices. Running a WebServer in a WebAssembly sandbox allows us to:
 
