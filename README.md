@@ -114,51 +114,73 @@ In order to build a working example http server we're going to need to collect a
   cp ~/mongoose/mongoose.h .
   cp ~/mongoose/mongoose.c .
   ```
-
-* The Mongoose example http server:
-  ```bash
-  cp ~/mongoose/examples/http-server/main.c .
-  ```
-  
-  
-## Updating the `main.c`  
-The Mongoose example http server includes a call to a file operation that WASI doesn't support, we do need to disable this, open up the `main.c` file in your editor of choice and comment out the following four lines, these start at line 107:
+## Creating  `server.c`  
+The Mongoose project used to include an example http server in their repository, however a recent update has removed this. Instead the Mongoose project includes an example HTTP server as a code snippet in their [`readme.md` file](https://github.com/cesanta/mongoose). This is reproduce below for your reference:
 
 ```c
-  // Root directory must not contain double dots. Make it absolute
-  // Do the conversion only if the root dir spec does not contain overrides
-  /* <-- comment out this if statement, realpath not supported
-  if (strchr(s_root_dir, ',') == NULL) {
-    realpath(s_root_dir, path);
-    s_root_dir = path;
+ #include "mongoose.h"   // To build, run: cc main.c mongoose.c
+
+// HTTP server event handler function
+void ev_handler(struct mg_connection *c, int ev, void *ev_data) {
+  if (ev == MG_EV_HTTP_MSG) {
+    struct mg_http_message *hm = (struct mg_http_message *) ev_data;
+    struct mg_http_serve_opts opts = { .root_dir = "./web_root/" };
+    mg_http_serve_dir(c, hm, &opts);
   }
-  */
+}
+
+int main(void) {
+  struct mg_mgr mgr;  // Declare event manager
+  mg_mgr_init(&mgr);  // Initialise event manager
+  mg_http_listen(&mgr, "http://0.0.0.0:8000", ev_handler, NULL);  // Setup listener
+  for (;;) {          // Run an infinite event loop
+    mg_mgr_poll(&mgr, 1000);
+  }
+  return 0;
+}
 ```
 
 ## Building The Server
 Now that everything is ready, we need to build the http server this can be done with the following command:
 
 ```bash
-/opt/wasi-sdk/bin/clang -o3 -D_WASI_EMULATED_SIGNAL -DWAMR -I ./wamr_extra -I . -I ~/public_work/mongoose_wamr -o httpserver.wasm -lwasi-emulated-signal -lpthread -Wl,--allow-undefined ./wasi_soc
-ket_ext.c ./mongoose.c ./main.c
+/opt/wasi-sdk/bin/clang -o3 -D_WASI_EMULATED_SIGNAL -DWAMR -I . -o httpserver.wasm -lwasi-emulated-signal -lpthread ./mongoose.c ./wasi_socket_ext.c ./server.c
 ```
 
-This should produce a `httpserver.wasm` file in your local directory.
+This should produce a `httpserver.wasm` file in your local directory. 
 
+### Creating Content
 
+As you can see from the code above the example webserver needs a `web_root` directory which some content to serve. Therefore we need to do the following steps:
+
+* Create the `web_root` folder with:
+  ```bash
+  mkdir web_root
+  ```
+
+* Create an example file, called `example.html` which contains the following:
+  ```html
+  <html>
+  	<head></head>
+  	<body>
+  		<h1>Hello</h1>
+  		<p>World</p>
+  	</body>
+  </html>
+  ```
+
+  
 
 # Executing WAMR 
 When you execute WAMR you have to tell it at the command line what permissions you will grant the running WebAssembly code. For the example WebServer to work you will need to provide the following command line switches:
 
-* `--dir=.` this tells WAMR to allow the running WASM code to see the current directory
-* `--addr-pool=127.0.0.1/15` tells WAMR to allow the running WASM code to use the IP address for local host
+* `--dir=.` this tells WAMR to allow the running WASM code to see the current directory. **NB:** The Server actually provides a listing of the content of the `web_root` subdirectory.
+* `--addr-pool=0.0.0.0/15` tells WAMR to allow the running WASM code to use the IP address for local host
 
 ```
-~/bin/iwasm --dir=. --addr-pool=127.0.0.1/15 httpserver.wasm -l http://127.0.0.1:8090
+~/bin/iwasm --dir=. --addr-pool=0.0.0.0/15 httpserver.wasm 
 ```
 
-
-
-This should give you a working webserver available on localhost at port 8090.
+This should give you a working webserver available on localhost at port 8000.
 
 ![screencapture](./picture/screencapture.PNG)

@@ -1,5 +1,5 @@
-#ifndef MONGOOSE_CUSTOM_H_
-#define MONGOOSE_CUSTOM_H_
+#ifndef MONGOOSE_CONFIG_H_
+#define MONGOOSE_CONFIG_H_
 
 /******************************************************************************
  * (c) Copyright 2024 Chris Woods
@@ -78,5 +78,5 @@ extern "C" {
 }
 #endif
 
-#endif// MONGOOSE_CUSTOM_H_
+#endif// MONGOOSE_CONFIG_H_
 
