@@ -38,7 +38,6 @@ extern "C" {
 #include <limits.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
-#include <signal.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
