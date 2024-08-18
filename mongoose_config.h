@@ -23,7 +23,7 @@ extern "C" {
 
 #define MG_ARCH_WASM_WAMR 15    // WebAssembly WAMR Runtime
 
-#if defined(__wasm__) && defined(WAMR)
+#if defined(__wasm__)
 #define MG_ARCH MG_ARCH_WASM_WAMR
 #endif
 
