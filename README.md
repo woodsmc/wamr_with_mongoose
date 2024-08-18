@@ -144,10 +144,16 @@ int main(void) {
 Now that everything is ready, we need to build the http server this can be done with the following command:
 
 ```bash
-/opt/wasi-sdk/bin/clang -o3 -I . -o httpserver.wasm ./mongoose.c ./wasi_socket_ext.c ./server.c
+/opt/wasi-sdk/bin/clang -I . -o httpserver.wasm ./mongoose.c ./wasi_socket_ext.c ./server.c
 ```
 
-This should produce a `httpserver.wasm` file in your local directory. 
+## Server Overhead
+
+This should produce a `httpserver.wasm` file in your local directory. If you examine this server it comes in at about 186Kb of code size. If you examine the compiled code you will see that it uses 2 WebAssembly pages of memory or 128kb of Linear memory. Not bad a for a small server.
+
+```bash
+-rwxr-xr-x  1 mad mad 186K Aug 18 16:01 httpserver.wasm
+```
 
 ### Creating Content
 
