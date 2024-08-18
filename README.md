@@ -161,11 +161,11 @@ As you can see from the code above the example webserver needs a `web_root` dire
 * Create an example file, called `example.html` which contains the following:
   ```html
   <html>
-  	<head></head>
-  	<body>
-  		<h1>Hello</h1>
-  		<p>World</p>
-  	</body>
+    <head></head>
+    <body>
+      <h1>Hello</h1>
+      <p>World</p>
+    </body>
   </html>
   ```
 
