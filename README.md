@@ -144,7 +144,7 @@ int main(void) {
 Now that everything is ready, we need to build the http server this can be done with the following command:
 
 ```bash
-/opt/wasi-sdk/bin/clang -o3 -I . -o httpserver.wasm -lwasi-emulated-signal ./mongoose.c ./wasi_socket_ext.c ./server.c
+/opt/wasi-sdk/bin/clang -o3 -I . -o httpserver.wasm ./mongoose.c ./wasi_socket_ext.c ./server.c
 ```
 
 This should produce a `httpserver.wasm` file in your local directory. 
