@@ -100,7 +100,7 @@ In order to build a working example http server we're going to need to collect a
   
 * Now let's copy in our custom header:
   ```bash
-  cp ~/wamr_with_mongoose/mongoose_custom.h .
+  cp ~/wamr_with_mongoose/mongoose_config.h .
   ```
 
 * The socket library files from WAMR:
