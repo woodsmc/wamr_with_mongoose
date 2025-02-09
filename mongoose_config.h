@@ -21,7 +21,8 @@
 extern "C" {
 #endif
 
-#define MG_ARCH_WASM_WAMR 15    // WebAssembly WAMR Runtime
+
+#define MG_ARCH_WASM_WAMR 99    // WebAssembly WAMR Runtime
 
 #if defined(__wasm__)
 #define MG_ARCH MG_ARCH_WASM_WAMR
@@ -69,6 +70,10 @@ extern "C" {
 
 #ifndef MG_PATH_MAX
 #define MG_PATH_MAX FILENAME_MAX
+#endif
+
+#ifndef MG_ENABLE_POSIX_FS
+#define MG_ENABLE_POSIX_FS 1
 #endif
 
 #endif // MG_ARCH_WASM
